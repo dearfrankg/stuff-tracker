@@ -28,9 +28,11 @@ const resources = {
     image: { borderRadius: "8px 8px 0 0" },
     itemName: { margin: "4px 8px" },
     breadcrumb: {
-      marginTop: -20,
+      marginTop: -33,
+      zIndex: 5,
       position: "fixed",
       width: "calc( 100vw - 200px )",
+      height: 50,
       background: "#fff",
       padding: "12px 8px 24px 8px ",
     },

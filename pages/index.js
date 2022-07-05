@@ -56,7 +56,7 @@ const methodItems = resources.selectors.getMethodItems({ styles, dbMethods, Titl
 
 const DatabaseMethods = () => {
   return (
-    <SiteLayout pageTitle="Database Methods">
+    <SiteLayout pageTitle="Admin">
       <List styles={styles} items={methodItems} />
     </SiteLayout>
   );

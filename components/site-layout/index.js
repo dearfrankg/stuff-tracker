@@ -37,13 +37,14 @@ const resources = {
       background: "#fff",
       width: "calc( 100vw - 200px )",
       borderBottom: "0.2px solid silver",
+      height: 50,
     },
 
     subHeader: {
       position: "fixed",
       zIndex: 5,
       margin: 0,
-      marginTop: 64,
+      marginTop: 50,
       background: "#fff",
       borderBottom: "0.2px solid silver",
       display: "flex",
@@ -85,28 +86,23 @@ const resources = {
       {
         key: 1,
         label: (
-          <Link href={"/"}>
-            <a>database methods</a>
+          <Link href={"/items"}>
+            <a>Items</a>
           </Link>
         ),
         icon: React.createElement(AppstoreOutlined),
       },
+      { key: 2, label: "Upload Images", icon: React.createElement(UploadOutlined) },
       {
-        key: 2,
+        key: 3,
         label: (
-          <Link href={"/items"}>
-            <a>items</a>
+          <Link href={"/"}>
+            <a>Admin</a>
           </Link>
         ),
-        icon: React.createElement(VideoCameraOutlined),
+        icon: React.createElement(CloudOutlined),
       },
-      { key: 3, label: "", icon: React.createElement(UploadOutlined) },
-      { key: 4, label: "", icon: React.createElement(BarChartOutlined) },
-      { key: 5, label: "", icon: React.createElement(CloudOutlined) },
-      { key: 6, label: "", icon: React.createElement(AppstoreOutlined) },
-      { key: 7, label: "", icon: React.createElement(TeamOutlined) },
-      { key: 8, label: "", icon: React.createElement(ShopOutlined) },
-      { key: 9, label: "", icon: React.createElement(UserOutlined) },
+      { key: 4, label: "Account", icon: React.createElement(UserOutlined) },
     ],
   },
 
