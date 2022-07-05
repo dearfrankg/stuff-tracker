@@ -18,6 +18,12 @@ const resources = {
       borderRadius: 8,
       boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
     },
+    itemCardSelected: {
+      width: 300,
+      background: "#efefef",
+      borderRadius: 8,
+      boxShadow: "rgba(70, 70, 93, 0.5) 0px 2px 5px -1px, rgba(0, 0, 0, 0.8) 0px 2px 4px -1px",
+    },
     imageWrap: {},
     image: { borderRadius: "8px 8px 0 0" },
     itemName: { margin: "4px 8px" },
@@ -55,13 +61,8 @@ const resources = {
 
     ItemList: ({ itemList }) => {
       const items = itemList.map((item, itemIndex) => {
-        const cardStyle =
-          item.id === state.selected
-            ? {
-                ...styles.itemCard,
-                boxShadow: "rgba(70, 70, 93, 0.5) 0px 2px 5px -1px, rgba(0, 0, 0, 0.8) 0px 2px 4px -1px",
-              }
-            : styles.itemCard;
+        const cardStyle = item.id === state.selected ? styles.itemCardSelected : styles.itemCard;
+
         return (
           <div key={itemIndex} style={cardStyle} onClick={() => handle.selectCard(item.id)}>
             <div style={styles.imageWrap}>
