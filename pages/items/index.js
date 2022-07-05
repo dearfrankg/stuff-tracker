@@ -57,7 +57,7 @@ const resources = {
           options={containerSelectOptions}
           style={styles.controlsSelect}
         />
-        <Search onSearch={handle.search} style={styles.controlsSearch} allowClear />
+        <Search defaultValue={state.search} onSearch={handle.search} style={styles.controlsSearch} allowClear />
       </Space>
     ),
 
