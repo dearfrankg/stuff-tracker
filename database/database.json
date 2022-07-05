@@ -1,0 +1,51 @@
+{
+  "users": [
+    { "id": 1, "name": "Frank Gutierrez", "username": "frankg", "password": "test123" },
+    { "id": 2, "name": "Joe Messineo", "username": "joe", "password": "test123" },
+    { "id": 3, "name": "Anthony Hare", "username": "anthony", "password": "test123" }
+  ],
+
+  "containers": [
+    { "id": 1, "type": "location", "name": "75 Palmwell Way", "containerId": 1, "userId": 1 },
+    { "id": 2, "type": "room", "name": "Garage", "containerId": 1, "userId": 1 },
+    { "id": 3, "type": "area", "name": "Back Yard", "containerId": 1, "userId": 1 },
+    { "id": 4, "type": "room", "name": "Kitchen", "containerId": 1, "userId": 1 },
+    { "id": 5, "type": "room", "name": "Master bedroom", "containerId": 1, "userId": 1 },
+    { "id": 6, "type": "container", "name": "Black container #1", "containerId": 2, "userId": 1 },
+    { "id": 7, "type": "container", "name": "Black container #2", "containerId": 3, "userId": 1 },
+    { "id": 8, "type": "container", "name": "Black container #3", "containerId": 3, "userId": 1 },
+    { "id": 9, "type": "container", "name": "Dresser top drawer", "containerId": 5, "userId": 1 },
+    { "id": 10, "type": "container", "name": "Dresser middle drawer", "containerId": 5, "userId": 1 },
+    { "id": 11, "type": "container", "name": "Dresser bottom drawer", "containerId": 5, "userId": 1 }
+  ],
+
+  "items": [
+    { "id": 1, "name": "aa batteries", "imageId": 1, "userId": 1, "containerId": 11 },
+    { "id": 2, "name": "bike locks", "imageId": 2, "userId": 1, "containerId": 10 },
+    { "id": 3, "name": "light bulb energy saver", "imageId": 3, "userId": 1, "containerId": 11 },
+    { "id": 4, "name": "nike baseball cap", "imageId": 4, "userId": 1, "containerId": 10 },
+    { "id": 5, "name": "wood saw", "imageId": 5, "userId": 1, "containerId": 2 },
+    { "id": 6, "name": "tree pruner", "imageId": 6, "userId": 1, "containerId": 2 },
+    { "id": 7, "name": "electric trimmer", "imageId": 7, "userId": 1, "containerId": 6 },
+    { "id": 8, "name": "macbook pro 2010", "imageId": 8, "userId": 1, "containerId": 7 },
+    { "id": 9, "name": "macbook pro 2014", "imageId": 9, "userId": 1, "containerId": 8 },
+    { "id": 10, "name": "macbook pro 2019", "imageId": 10, "userId": 1, "containerId": 5 },
+    { "id": 11, "name": "samsung monitor", "imageId": 11, "userId": 1, "containerId": 5 },
+    { "id": 12, "name": "alarm clock", "imageId": 12, "userId": 1, "containerId": 5 }
+  ],
+
+  "images": [
+    { "id": 1, "url": "/images/aa-batteries.webp", "alt": "batteries" },
+    { "id": 2, "url": "/images/bike-lock.jpg", "alt": "bike locks" },
+    { "id": 3, "url": "/images/energy-saver-bulb.jpg", "alt": "light bulb energy saver" },
+    { "id": 4, "url": "/images/nike-baseball-cap.webp", "alt": "nike baseball cap" },
+    { "id": 5, "url": "/images/wood-saw.jpg", "alt": "wood saw" },
+    { "id": 6, "url": "/images/tree-pruner.jpg", "alt": "tree pruner" },
+    { "id": 7, "url": "/images/bush-trimmer.webp", "alt": "electric trimmer" },
+    { "id": 8, "url": "/images/macbook-pro-2010.jpg", "alt": "macbook pro 2010" },
+    { "id": 9, "url": "/images/macbook-pro-2014.jpg", "alt": "macbook pro 2014" },
+    { "id": 10, "url": "/images/macbook-pro-2019.jpg", "alt": "macbook pro 2019" },
+    { "id": 11, "url": "/images/samsung-monitor.jpg", "alt": "samsung monitor" },
+    { "id": 12, "url": "/images/alarm-clock.jpg", "alt": "alarm clock" }
+  ]
+}
