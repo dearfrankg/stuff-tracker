@@ -1,16 +1,17 @@
-import React from "react";
-import Link from "next/link";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { Layout, Menu, PageHeader } from "antd";
 import {
   AppstoreOutlined,
-  BarChartOutlined,
   CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
   UploadOutlined,
   UserOutlined,
+  BarChartOutlined,
+  ShopOutlined,
+  TeamOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, PageHeader } from "antd";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 const resources = {
@@ -84,33 +85,33 @@ const resources = {
   data: {
     menuItems: [
       {
-        key: 1,
-        label: (
-          <Link href={"/items"}>
-            <a>Items</a>
-          </Link>
-        ),
+        key: "",
+        label: "Items",
         icon: React.createElement(AppstoreOutlined),
       },
-      { key: 2, label: "Upload Images", icon: React.createElement(UploadOutlined) },
       {
-        key: 3,
-        label: (
-          <Link href={"/"}>
-            <a>Admin</a>
-          </Link>
-        ),
+        key: "upload",
+        label: "Upload",
+        icon: React.createElement(UploadOutlined),
+      },
+      {
+        key: "admin",
+        label: "Admin",
         icon: React.createElement(CloudOutlined),
       },
-      { key: 4, label: "Account", icon: React.createElement(UserOutlined) },
+      {
+        key: "account",
+        label: "Account",
+        icon: React.createElement(UserOutlined),
+      },
     ],
   },
 
   components: (styles) => ({
-    SideBar: ({ menuItems }) => (
+    SideBar: ({ menuItems, current, handle }) => (
       <Sider style={styles.sider}>
         <div style={styles.logo} />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]} items={menuItems} />
+        <Menu theme="dark" mode="inline" onClick={handle.onClick} defaultSelectedKeys={[current]} items={menuItems} />
       </Sider>
     ),
 
@@ -135,14 +136,27 @@ const { styles } = resources;
 const { menuItems } = resources.data;
 const { SideBar, SiteHeader, SiteSubHeader } = resources.components(styles);
 
-export const SiteLayout = ({ pageTitle, controls, children }) => (
-  <Layout hasSider>
-    <SideBar menuItems={menuItems} />
-    <Layout style={styles.layout}>
-      <SiteHeader appTitle="Stuff Tracker" />
-      <SiteSubHeader pageTitle={pageTitle} controls={controls} />
-      <Content style={styles.content}>{children}</Content>
-      <Footer style={styles.footer}>©2022 Created by Cogent Labs</Footer>
+export const SiteLayout = ({ pageTitle, controls, children }) => {
+  const router = useRouter();
+  const path = router.pathname.slice(1);
+  const [current, setCurrent] = useState(path);
+
+  const handle = {
+    onClick: ({ key }) => {
+      setCurrent(key);
+      router.push(`/${key.toLowerCase()}`);
+    },
+  };
+
+  return (
+    <Layout hasSider>
+      <SideBar {...{ menuItems, handle, current }} />
+      <Layout style={styles.layout}>
+        <SiteHeader appTitle="Stuff Tracker" />
+        <SiteSubHeader pageTitle={pageTitle} controls={controls} />
+        <Content style={styles.content}>{children}</Content>
+        <Footer style={styles.footer}>©2022 Created by Cogent Labs</Footer>
+      </Layout>
     </Layout>
-  </Layout>
-);
+  );
+};
