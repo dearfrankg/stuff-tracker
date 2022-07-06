@@ -90,6 +90,11 @@ const resources = {
         icon: React.createElement(AppstoreOutlined),
       },
       {
+        key: "containers",
+        label: "Containers",
+        icon: React.createElement(AppstoreOutlined),
+      },
+      {
         key: "upload",
         label: "Upload",
         icon: React.createElement(UploadOutlined),
