@@ -1,0 +1,34 @@
+
+// USERS API
+
+###
+// list
+GET http://localhost:3000/api/users
+
+###
+// create
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "name": "Joe Smo",
+    "username": "jsmo",
+    "password": "xxx"
+}
+
+###
+// read
+GET http://localhost:3000/api/users/4
+
+###
+// update
+PUT http://localhost:3000/api/users/4
+Content-Type: application/json
+
+{
+    "password": "test123"
+}
+
+###
+// delete
+DELETE http://localhost:3000/api/users/4

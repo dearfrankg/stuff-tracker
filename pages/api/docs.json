@@ -1,0 +1,30 @@
+{
+  "users": {
+    "GET `/users": "get list of users",
+    "POST `/users`": "create one user",
+    "GET `/users/:userId": "get one user",
+    "PUT `/users/:userId": "update one user",
+    "DELETE `/users/:userId": "delete one user"
+  },
+  "containers": {
+    "GET `/containers": "get list of containers",
+    "POST `/containers`": "create one container",
+    "GET `/containers/:containerId": "get one container",
+    "PUT `/containers/:containerId": "update one container",
+    "DELETE `/containers/:containerId": "delete one container"
+  },
+  "items": {
+    "GET `/items": "get list of items",
+    "POST `/items`": "create one item",
+    "GET `/items/:itemId": "get one item",
+    "PUT `/items/:itemId": "update one item",
+    "DELETE `/items/:itemId": "delete one item"
+  },
+  "images": {
+    "GET `/images": "get list of images",
+    "POST `/images`": "create one image",
+    "GET `/images/:imageId": "get one image",
+    "PUT `/images/:imageId": "update one image",
+    "DELETE `/images/:imageId": "delete one image"
+  }
+}
