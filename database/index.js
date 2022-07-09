@@ -39,16 +39,16 @@ const generic = {
 
   update: ({ table, id, payload, fields }) => {
     const record = data[table].find((item) => item.id === id);
-    if (record.id) {
+    if (record) {
       fields.forEach((field) => (record[field] = payload[field] || record[field]));
     }
     saveData();
-    return record.id ? SUCCESS : NOT_FOUND;
+    return record ? SUCCESS : NOT_FOUND;
   },
 
   delete: ({ table, id }) => {
     const record = data[table].find((item) => item.id === id);
-    if (record.id) {
+    if (record) {
       data[table] = data[table].filter((item) => item.id !== id);
     }
     saveData();
