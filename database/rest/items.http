@@ -1,0 +1,36 @@
+
+// USERS API
+
+###
+// list
+GET http://localhost:3000/api/items
+
+###
+// create
+POST http://localhost:3000/api/items
+Content-Type: application/json
+
+{
+    "name": "more aa batteries",
+    "imageId": 1,
+    "userId": 1,
+    "containerId": 5
+
+}
+
+###
+// read
+GET http://localhost:3000/api/items/13
+
+###
+// update
+PUT http://localhost:3000/api/items/13
+Content-Type: application/json
+
+{
+  "name": "extra aa batteries"
+}
+
+###
+// delete
+DELETE http://localhost:3000/api/items/13

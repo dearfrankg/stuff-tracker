@@ -1,0 +1,33 @@
+
+// USERS API
+
+###
+// list
+GET http://localhost:3000/api/images
+
+###
+// create
+POST http://localhost:3000/api/images
+Content-Type: application/json
+
+{
+    "url": "/vercel.svg",
+    "alt": "vercel logo"
+}
+
+###
+// read
+GET http://localhost:3000/api/images/13
+
+###
+// update
+PUT http://localhost:3000/api/images/13
+Content-Type: application/json
+
+{
+    "alt": "vercel logo image"
+}
+
+###
+// delete
+DELETE http://localhost:3000/api/images/13

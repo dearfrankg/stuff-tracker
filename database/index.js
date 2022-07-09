@@ -68,7 +68,7 @@ export const db = {
   containers: {
     list: (related = []) => generic.list({ table: "containers", related }),
     create: (payload) => generic.create({ table: "containers", payload, fields: fields.containers.slice(1) }),
-    read: (id) => generic.read("containers", id),
+    read: (id) => generic.read({ table: "containers", id }),
     update: (id, payload) => generic.update({ table: "containers", id, payload, fields: fields.containers.slice(1) }),
     delete: (id) => generic.delete({ table: "containers", id }),
   },
@@ -76,7 +76,7 @@ export const db = {
   items: {
     list: (related = []) => generic.list({ table: "items", related }),
     create: (payload) => generic.create({ table: "items", payload, fields: fields.items.slice(1) }),
-    read: (id) => generic.read("items", id),
+    read: (id) => generic.read({ table: "items", id }),
     update: (id, payload) => generic.update({ table: "items", id, payload, fields: fields.items.slice(1) }),
     delete: (id) => generic.delete({ table: "items", id }),
   },
@@ -84,16 +84,11 @@ export const db = {
   images: {
     list: (related = []) => generic.list({ table: "images", related }),
     create: (payload) => generic.create({ table: "images", payload, fields: fields.images.slice(1) }),
-    read: (id) => generic.read("images", id),
+    read: (id) => generic.read({ table: "images", id }),
     update: (id, payload) => generic.update({ table: "images", id, payload, fields: fields.images.slice(1) }),
     delete: (id) => generic.delete({ table: "images", id }),
   },
 
-  getUserById: (id) => data.users.find((item) => item.id === id),
-
-  getContainers: () => data.containers,
-  getContainerById: (id) => data.containers.find((item) => item.id === id),
-  getContainersByUserId: (id) => data.containers.filter((item) => item.userId === id),
   genContainerInfoAscendingById: ({ containerId, fieldName, breadcrumb = [], stop = false }) => {
     if (stop) {
       return breadcrumb;
@@ -133,9 +128,6 @@ export const db = {
     });
   },
 
-  getItems: () => data.items,
-  getItemById: (id) => data.items.find((item) => item.id === id),
-  getItemsByUserId: (id) => data.items.filter((item) => item.userId === id),
   getItemsByContainerId: (id) => {
     const containerIds = db.genContainerInfoDecendingById({ containerId: id, fieldName: "id" });
     const filterWithinContainers = (item) => containerIds.includes(item.containerId);
@@ -145,35 +137,4 @@ export const db = {
     const { containerId } = db.getItemById(itemId);
     return db.genContainerInfoAscendingById({ containerId, fieldName: "name" });
   },
-
-  getImages: () => data.images,
-  getImageById: (id) => data.images.find((item) => item.id === id),
-};
-
-const usersList = (relations) => {
-  const relationships = {
-    containers: (userId) => {
-      const data = db.containers.list({ belongingToUser: userId });
-      return {
-        data,
-        count: data.length,
-      };
-    },
-    containerCount: (userId) => {
-      const obj = relationships.containers(userId);
-      delete obj.data;
-      return obj;
-    },
-  };
-
-  return data.users.map((user) => {
-    relations.forEach((relation) => {
-      if (relationships[relation]) {
-        user = {
-          ...user,
-          [relation]: relationships[relation](user.id),
-        };
-      }
-    });
-  });
 };

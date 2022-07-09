@@ -1,0 +1,35 @@
+
+// CONTAINERS API
+
+###
+// list
+GET http://localhost:3000/api/containers
+
+###
+// create
+POST http://localhost:3000/api/containers
+Content-Type: application/json
+
+{
+    "type": "room",
+    "name": "bedroom1",
+    "containerId": 5,
+    "userId": 1
+}
+
+###
+// read
+GET http://localhost:3000/api/containers/12
+
+###
+// update
+PUT http://localhost:3000/api/containers/12
+Content-Type: application/json
+
+{
+    "name": "bedroom-1"
+}
+
+###
+// delete
+DELETE http://localhost:3000/api/containers/12
