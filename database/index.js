@@ -1,11 +1,13 @@
-// import fs from "fs";
+import fs from "fs";
+import path from "path";
 import data from "./database.json";
 
 const SUCCESS = { success: "ok" };
 const NOT_FOUND = { message: "record not found" };
 
 function saveData() {
-  // fs.writeFileSync("./database.json", JSON.stringify(data, null, 2));
+  const file = path.join(process.cwd(), "database", "database.json");
+  fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
 const fields = {
