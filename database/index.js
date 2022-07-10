@@ -72,7 +72,7 @@ export const db = {
     update: (id, payload) => generic.update({ table: "containers", id, payload, fields: fields.containers.slice(1) }),
     delete: (id) => generic.delete({ table: "containers", id }),
 
-    listByUserId: (id) => data.containers.filter((item) => item.userId === SVGAnimatedNumber(id)),
+    listByUserId: (id) => data.containers.filter((item) => item.userId === id),
   },
 
   items: {

@@ -127,7 +127,7 @@ const resources = {
       const isAllContainers = state.container === 0;
       const itemList = isAllContainers
         ? db.items.listByUserId(userId)
-        : db.items.listContainerAcendants(state.container);
+        : db.items.listContainerDecendants(state.container);
 
       return itemList.filter(handle.filterNameIncludesSearch).map(handle.addImageAndAltFields);
     },
