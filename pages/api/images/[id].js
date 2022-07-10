@@ -9,15 +9,15 @@ export default function handler(req, res) {
 
   switch (method) {
     case "GET":
-      res.status(200).json(db.images.read(Number(id)));
+      res.status(200).json(db.images.read(id));
       break;
 
     case "PUT":
-      res.status(200).json(db.images.update(Number(id), body));
+      res.status(200).json(db.images.update(id, body));
       break;
 
     case "DELETE":
-      res.status(200).json(db.images.delete(Number(id)));
+      res.status(200).json(db.images.delete(id));
       break;
 
     default:

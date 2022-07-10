@@ -125,7 +125,9 @@ const resources = {
 
     getItemList: ({ userId, state, handle }) => {
       const isAllContainers = state.container === 0;
-      const itemList = isAllContainers ? db.items.listByUserId(userId) : db.items.listWithinContainer(state.container);
+      const itemList = isAllContainers
+        ? db.items.listByUserId(userId)
+        : db.items.listContainerAcendants(state.container);
 
       return itemList.filter(handle.filterNameIncludesSearch).map(handle.addImageAndAltFields);
     },

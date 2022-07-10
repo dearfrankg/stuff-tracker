@@ -18,8 +18,8 @@ const fields = {
 };
 
 const generic = {
-  list: ({ table, related }) => {
-    return data[table];
+  list: ({ table, options, db }) => {
+    return options?.filter ? db[table][options.filter](Number(options.id)) : data[table];
   },
 
   create: ({ table, payload, fields }) => {
@@ -33,12 +33,12 @@ const generic = {
   },
 
   read: ({ table, id }) => {
-    const record = data[table].find((item) => item.id === id);
+    const record = data[table].find((item) => item.id === Number(id));
     return record ? record : NOT_FOUND;
   },
 
   update: ({ table, id, payload, fields }) => {
-    const record = data[table].find((item) => item.id === id);
+    const record = data[table].find((item) => item.id === Number(id));
     if (record) {
       fields.forEach((field) => (record[field] = payload[field] || record[field]));
     }
@@ -47,9 +47,9 @@ const generic = {
   },
 
   delete: ({ table, id }) => {
-    const record = data[table].find((item) => item.id === id);
+    const record = data[table].find((item) => item.id === Number(id));
     if (record) {
-      data[table] = data[table].filter((item) => item.id !== id);
+      data[table] = data[table].filter((item) => item.id !== Number(id));
     }
     saveData();
     return record ? SUCCESS : NOT_FOUND;
@@ -58,7 +58,7 @@ const generic = {
 
 export const db = {
   users: {
-    list: (related = []) => generic.list({ table: "users", related }),
+    list: (options) => generic.list({ table: "users", options, db }),
     create: (payload) => generic.create({ table: "users", payload, fields: fields.users.slice(1) }),
     read: (id) => generic.read({ table: "users", id }),
     update: (id, payload) => generic.update({ table: "users", id, payload, fields: fields.users.slice(1) }),
@@ -72,19 +72,21 @@ export const db = {
     update: (id, payload) => generic.update({ table: "containers", id, payload, fields: fields.containers.slice(1) }),
     delete: (id) => generic.delete({ table: "containers", id }),
 
-    listByUserId: (id) => data.containers.filter((item) => item.userId === id),
+    listByUserId: (id) => data.containers.filter((item) => item.userId === SVGAnimatedNumber(id)),
   },
 
   items: {
-    list: (related = []) => generic.list({ table: "items", related }),
+    list: (options) => generic.list({ table: "items", options, db }),
     create: (payload) => generic.create({ table: "items", payload, fields: fields.items.slice(1) }),
     read: (id) => generic.read({ table: "items", id }),
     update: (id, payload) => generic.update({ table: "items", id, payload, fields: fields.items.slice(1) }),
     delete: (id) => generic.delete({ table: "items", id }),
 
-    listByUserId: (id) => data.items.filter((item) => item.userId === id),
+    listByUserId: (id) => {
+      return data.items.filter((item) => item.userId === id);
+    },
     listByContainerId: (id) => data.items.filter((item) => item.containerId === id),
-    listWithinContainer: (containerId) => {
+    listContainerAcendants: (containerId) => {
       const containerIds = db.getContainerDecendantInfo({ containerId, fieldName: "id" });
       const filterWithinContainers = (item) => containerIds.includes(item.containerId);
       return db.items.list().filter(filterWithinContainers);

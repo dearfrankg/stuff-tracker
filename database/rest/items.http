@@ -34,3 +34,15 @@ Content-Type: application/json
 ###
 // delete
 DELETE http://localhost:3000/api/items/13
+
+###
+// list by userId
+GET http://localhost:3000/api/items?filter=listByUserId&id=1
+
+###
+// list by containerId
+GET http://localhost:3000/api/items?filter=listByContainerId&id=5
+
+###
+// list acendants of container
+GET http://localhost:3000/api/items?filter=listContainerAcendants&id=5

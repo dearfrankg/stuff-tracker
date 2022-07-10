@@ -1,11 +1,11 @@
 import { db } from "/database";
 
 export default function handler(req, res) {
-  const { method, body } = req;
+  const { method, body, query } = req;
 
   switch (method) {
     case "GET":
-      res.status(200).json(db.items.list());
+      res.status(200).json(db.items.list(query));
       break;
 
     case "POST":
