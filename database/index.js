@@ -71,6 +71,8 @@ export const db = {
     read: (id) => generic.read({ table: "containers", id }),
     update: (id, payload) => generic.update({ table: "containers", id, payload, fields: fields.containers.slice(1) }),
     delete: (id) => generic.delete({ table: "containers", id }),
+
+    listByUserId: (id) => data.containers.filter((item) => item.userId === id),
   },
 
   items: {
@@ -79,6 +81,19 @@ export const db = {
     read: (id) => generic.read({ table: "items", id }),
     update: (id, payload) => generic.update({ table: "items", id, payload, fields: fields.items.slice(1) }),
     delete: (id) => generic.delete({ table: "items", id }),
+
+    listByUserId: (id) => data.items.filter((item) => item.userId === id),
+    listByContainerId: (id) => data.items.filter((item) => item.containerId === id),
+    listWithinContainer: (containerId) => {
+      const containerIds = db.getContainerDecendantInfo({ containerId, fieldName: "id" });
+      const filterWithinContainers = (item) => containerIds.includes(item.containerId);
+      return db.items.list().filter(filterWithinContainers);
+    },
+
+    breadcrumb: (itemId) => {
+      const { containerId } = db.items.read(itemId);
+      return db.getContainerAcendantInfo({ containerId, fieldName: "name" });
+    },
   },
 
   images: {
@@ -89,21 +104,22 @@ export const db = {
     delete: (id) => generic.delete({ table: "images", id }),
   },
 
-  genContainerInfoAscendingById: ({ containerId, fieldName, breadcrumb = [], stop = false }) => {
+  getContainerAcendantInfo: ({ containerId, fieldName, breadcrumb = [], stop = false }) => {
     if (stop) {
       return breadcrumb;
     }
 
-    const container = db.getContainerById(containerId);
+    const container = db.containers.read(containerId);
     breadcrumb.unshift(container[fieldName]);
-    return db.genContainerInfoAscendingById({
+    return db.getContainerAcendantInfo({
       containerId: container.containerId,
       fieldName,
       breadcrumb,
       stop: container.type === "location",
     });
   },
-  genContainerInfoDecendingById: ({ containerId, fieldName, breadcrumb = [], stop = false }) => {
+
+  getContainerDecendantInfo: ({ containerId, fieldName, breadcrumb = [], stop = false }) => {
     if (stop) {
       return breadcrumb;
     }
@@ -113,28 +129,18 @@ export const db = {
     }
 
     const withinContainers = (item) => breadcrumb.includes(item.containerId);
-    const containerIds = db
-      .getContainers()
+    const containerIds = db.containers
+      .list()
       .filter(withinContainers)
       .map((item) => item[fieldName]);
 
     const newBreadcrumb = [...new Set([...breadcrumb, ...containerIds])];
 
-    return db.genContainerInfoDecendingById({
+    return db.getContainerDecendantInfo({
       containerId,
       fieldName,
       breadcrumb: newBreadcrumb,
       stop: breadcrumb.length === newBreadcrumb.length,
     });
-  },
-
-  getItemsByContainerId: (id) => {
-    const containerIds = db.genContainerInfoDecendingById({ containerId: id, fieldName: "id" });
-    const filterWithinContainers = (item) => containerIds.includes(item.containerId);
-    return db.getItems().filter(filterWithinContainers);
-  },
-  getBreadcrumbByItemId: (itemId) => {
-    const { containerId } = db.getItemById(itemId);
-    return db.genContainerInfoAscendingById({ containerId, fieldName: "name" });
   },
 };

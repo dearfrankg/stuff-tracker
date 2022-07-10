@@ -98,7 +98,7 @@ const resources = {
       order: containerOrderMap[item.type],
     }),
     addImageAndAltFields: (item) => {
-      const { url, alt } = db.getImageById(item.id);
+      const { url, alt } = db.images.read(item.id);
 
       return {
         id: item.id,
@@ -111,8 +111,8 @@ const resources = {
 
   selectors: {
     getContainerSelectOptions: ({ handle, userId }) => {
-      const containerSelectOptions = db
-        .getContainersByUserId(userId)
+      const containerSelectOptions = db.containers
+        .listByUserId(userId)
         .map(handle.addOrderField)
         .sort(handle.sortByOrderAndName)
         .map((item) => ({
@@ -125,12 +125,12 @@ const resources = {
 
     getItemList: ({ userId, state, handle }) => {
       const isAllContainers = state.container === 0;
-      const itemList = isAllContainers ? db.getItemsByUserId(userId) : db.getItemsByContainerId(state.container);
+      const itemList = isAllContainers ? db.items.listByUserId(userId) : db.items.listWithinContainer(state.container);
 
       return itemList.filter(handle.filterNameIncludesSearch).map(handle.addImageAndAltFields);
     },
 
-    getBreadcrumbByItemId: (itemId) => (itemId ? db.getBreadcrumbByItemId(itemId) : []),
+    getBreadcrumbByItemId: (itemId) => (itemId ? db.items.breadcrumb(itemId) : []),
   },
 };
 
