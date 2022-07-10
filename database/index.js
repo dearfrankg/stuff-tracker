@@ -86,7 +86,7 @@ export const db = {
       return data.items.filter((item) => item.userId === id);
     },
     listByContainerId: (id) => data.items.filter((item) => item.containerId === id),
-    listContainerAcendants: (containerId) => {
+    listContainerDecendants: (containerId) => {
       const containerIds = db.getContainerDecendantInfo({ containerId, fieldName: "id" });
       const filterWithinContainers = (item) => containerIds.includes(item.containerId);
       return db.items.list().filter(filterWithinContainers);

@@ -44,5 +44,5 @@ GET http://localhost:3000/api/items?filter=listByUserId&id=1
 GET http://localhost:3000/api/items?filter=listByContainerId&id=5
 
 ###
-// list acendants of container
-GET http://localhost:3000/api/items?filter=listContainerAcendants&id=5
+// list container descendant items
+GET http://localhost:3000/api/items?filter=listContainerDecendants&id=5
