@@ -12,6 +12,10 @@ export default function handler(req, res) {
       res.status(200).json(db.items.create(body));
       break;
 
+    case "OPTIONS":
+      res.status(200).json({});
+      break;
+
     default:
       res.setHeader("Allow", ["GET", "POST"]);
       res.status(405).end(`Method ${method} Not Allowed`);

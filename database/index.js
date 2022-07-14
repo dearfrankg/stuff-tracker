@@ -19,7 +19,7 @@ const fields = {
 
 const generic = {
   list: ({ table, options, db }) => {
-    return options?.filter ? db[table][options.filter](Number(options.id)) : data[table];
+    return options?.filter ? [...db[table][options.filter](Number(options.id))] : [...data[table]];
   },
 
   create: ({ table, payload, fields }) => {
@@ -29,12 +29,12 @@ const generic = {
     fields.forEach((field) => payload[field] && (record[field] = payload[field]));
     data[table].push(record);
     saveData();
-    return record;
+    return { ...record };
   },
 
   read: ({ table, id }) => {
     const record = data[table].find((item) => item.id === Number(id));
-    return record ? record : NOT_FOUND;
+    return record ? { ...record } : NOT_FOUND;
   },
 
   update: ({ table, id, payload, fields }) => {
@@ -43,7 +43,7 @@ const generic = {
       fields.forEach((field) => (record[field] = payload[field] || record[field]));
     }
     saveData();
-    return record ? SUCCESS : NOT_FOUND;
+    return { ...record } ? SUCCESS : NOT_FOUND;
   },
 
   delete: ({ table, id }) => {
