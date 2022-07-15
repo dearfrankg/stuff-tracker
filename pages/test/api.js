@@ -25,42 +25,44 @@ const records = {
   },
 };
 
+const tables = ["users", "containers", "items", "images"];
+
+const getData = async (setState) => {
+  const data = {};
+
+  for (let i = 0; i < tables.length; i++) {
+    const table = tables[i];
+    const nextId = Math.max(...(await services[table].list()).map((item) => item.id)) + 1;
+    data[table] = {};
+    data[table].list = { records: (await services[table].list()).length };
+    data[table].create = await services[table].create({ payload: records[table].create });
+    data[table].read = await services[table].read({ id: nextId });
+    data[table].update = await (async () => {
+      await services[table].update({ id: nextId, payload: records[table].update });
+      return await services[table].read({ id: nextId });
+    })();
+    data[table].delete = await (async () => {
+      await services[table].delete({ id: nextId });
+      return { records: (await services[table].list()).length };
+    })();
+  }
+
+  setState(data);
+};
+
 const API = (props) => {
   const [state, setState] = useState({});
-  console.log(">>state: ", JSON.stringify(state, null, 2));
-
-  const getData = async () => {
-    console.log("getData: ");
-    const data = {};
-    const tables = ["users", "containers", "items", "images"];
-
-    for (let i = 0; i < tables.length; i++) {
-      const table = tables[i];
-      console.log("table: ", table);
-      const nextId = Math.max(...(await services[table].list()).map((item) => item.id)) + 1;
-      data[table] = {};
-      data[table].list = { records: (await services[table].list()).length };
-      data[table].create = await services[table].create({ payload: records[table].create });
-      data[table].read = await services[table].read({ id: nextId });
-      data[table].update = await (async () => {
-        await services[table].update({ id: nextId, payload: records[table].update });
-        return await services[table].read({ id: nextId });
-      })();
-      data[table].delete = await (async () => {
-        await services[table].delete({ id: nextId });
-        return { records: (await services[table].list()).length };
-      })();
-    }
-
-    console.log("data: ", data);
-    setState(data);
-  };
 
   useEffect(() => {
-    getData();
+    getData(setState);
   }, []);
 
-  const flexItems = <div>hello</div>;
+  const flexItems = tables.map((table, tableIndex) => (
+    <div key={tableIndex}>
+      <h2>{table}</h2>
+      <pre>{state[table] && JSON.stringify(state[table], null, 2)}</pre>
+    </div>
+  ));
 
   return (
     <>
