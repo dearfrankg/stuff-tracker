@@ -27,14 +27,16 @@ const records = {
 
 const API = (props) => {
   const [state, setState] = useState({});
-  console.log("state: ", JSON.stringify(state, null, 2));
+  console.log(">>state: ", JSON.stringify(state, null, 2));
 
   const getData = async () => {
+    console.log("getData: ");
     const data = {};
-    const tables = ["users"]; //  "containers", "items", "images"
+    const tables = ["users", "containers", "items", "images"];
 
     for (let i = 0; i < tables.length; i++) {
       const table = tables[i];
+      console.log("table: ", table);
       const nextId = Math.max(...(await services[table].list()).map((item) => item.id)) + 1;
       data[table] = {};
       data[table].list = { records: (await services[table].list()).length };
@@ -50,6 +52,7 @@ const API = (props) => {
       })();
     }
 
+    console.log("data: ", data);
     setState(data);
   };
 
